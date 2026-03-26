@@ -6,135 +6,110 @@
     <title>Sirf Tumhare Liye ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@600&display=swap" rel="stylesheet">
     <style>
+        * { box-sizing: border-box; }
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #fff5f7; /* Halka pinkish background */
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+            background: #fff5f7;
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
         }
 
-        /* --- STAGE 1: GIFT BUTTON STYLES --- */
+        /* --- STAGE 1: GIFT BOX (Mobile Friendly) --- */
         #gift-box {
             text-align: center;
-            cursor: pointer;
-            transition: all 0.5s ease;
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
             z-index: 10;
         }
 
         .gift-icon {
-            font-size: 100px;
+            font-size: 70px; /* Thoda chota mobile ke liye */
             animation: giftBounce 2s infinite;
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
         }
 
         @keyframes giftBounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0) rotate(0deg);}
-            40% {transform: translateY(-30px) rotate(-5deg);}
-            60% {transform: translateY(-15px) rotate(5deg);}
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
         }
 
         button {
             background: linear-gradient(45deg, #ff4d6d, #ff758f);
-            color: white;
-            border: none;
-            padding: 15px 35px;
-            font-size: 1.3rem;
+            color: white; border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
-            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.4);
-            transition: all 0.3s ease;
-            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+            margin-top: 15px;
+            width: 80%; /* Mobile par button bada dikhega */
         }
 
-        button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.6);
-        }
-
-        /* --- STAGE 2: LOVE ANIMATION STYLES (Initially Hidden) --- */
+        /* --- STAGE 2: LOVE SCREEN (Responsive) --- */
         #love-screen {
-            display: none; /* Hidden */
+            display: none;
             text-align: center;
             flex-direction: column;
-            z-index: 5;
+            width: 100%;
+            padding: 10px;
         }
 
-        /* Fancy animated text style */
         .fancy-text {
-            font-family: 'Caveat', cursive; /* Handwritten styke font */
-            font-size: 5rem;
+            font-family: 'Caveat', cursive;
+            font-size: 3.5rem; /* Mobile ke liye perfect size */
             color: #ff4d6d;
             margin: 0;
             display: flex;
             justify-content: center;
-            gap: 10px; /* space between letters */
+            flex-wrap: wrap; /* Text mobile par wrap ho jayega */
+            gap: 5px;
         }
 
-        /* Base style for each letter before animation */
+        /* Letter Entry Animation */
         .fancy-text span {
             display: inline-block;
             opacity: 0;
-            transform: translateY(100px) rotate(50deg) scale(0);
-            animation: letterEntry 1s ease-out forwards;
-            text-shadow: 0 0 10px rgba(255, 77, 109, 0.3);
+            transform: translateY(50px) scale(0);
+            animation: letterEntry 0.8s ease-out forwards;
         }
 
-        /* Letter entering animation */
         @keyframes letterEntry {
-            to {
-                opacity: 1;
-                transform: translateY(0) rotate(0deg) scale(1);
-            }
-        }
-
-        /* Glowing effect after text is formed */
-        .glow-effect {
-            animation: textGlow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes textGlow {
-            from {
-                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ff4d6d, 0 0 40px #ff4d6d;
-            }
-            to {
-                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff4d6d, 0 0 20px #ff4d6d;
-            }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .shiny-text {
             color: #c9184a;
-            font-size: 1.6rem;
-            font-weight: 500;
-            margin-top: 10px;
+            font-size: 1.2rem;
+            margin-top: 15px;
             opacity: 0;
-            animation: fadeIn 1s ease 2s forwards; /* Fades in after main text */
+            animation: fadeIn 1s ease 2s forwards;
+            padding: 0 20px;
         }
 
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
+        @keyframes fadeIn { to { opacity: 1; } }
 
-        /* --- FLOATING HEARTS STYLES --- */
+        /* Floating Hearts */
         .heart {
             position: absolute;
-            color: #ff758f;
             animation: fly linear infinite;
             pointer-events: none;
             z-index: 1;
         }
 
         @keyframes fly {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            0% { transform: translateY(0); opacity: 0; }
             10% { opacity: 1; }
-            90% { opacity: 1; }
             100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Screen choti ho toh text size adjust karein */
+        @media (max-width: 480px) {
+            .fancy-text { font-size: 2.8rem; }
+            .shiny-text { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -147,69 +122,33 @@
 
     <div id="love-screen">
         <h1 class="fancy-text" id="love-text">
-            <span>I</span>
-            <span>&nbsp;</span> <span>L</span>
-            <span>o</span>
-            <span>v</span>
-            <span>e</span>
-            <span>&nbsp;</span>
-            <span>Y</span>
-            <span>o</span>
-            <span>u</span>
-            <span>❤️</span>
+            <span>I</span><span>&nbsp;</span><span>L</span><span>o</span><span>v</span><span>e</span><span>&nbsp;</span><span>Y</span><span>o</span><span>u</span><span>❤️</span>
         </h1>
-        
+        <p class="shiny-text">Aap mere liye sabse special ho!</p>
     </div>
 
     <script>
         function revealLove() {
-            // 1. Hide the gift button smoothly
-            const giftBox = document.getElementById('gift-box');
-            giftBox.style.opacity = '0';
-            giftBox.style.transform = 'scale(0.5)';
+            document.getElementById('gift-box').style.display = 'none';
+            const loveScreen = document.getElementById('love-screen');
+            loveScreen.style.display = 'flex';
             
-            setTimeout(() => {
-                giftBox.style.display = 'none';
-                
-                // 2. Show the love screen
-                const loveScreen = document.getElementById('love-screen');
-                loveScreen.style.display = 'flex';
-                
-                // 3. Set a delay for each letter's animation
-                const letters = document.querySelectorAll('.fancy-text span');
-                letters.forEach((letter, index) => {
-                    letter.style.animationDelay = (index * 0.15) + 's'; // staggered entry
-                });
+            const letters = document.querySelectorAll('.fancy-text span');
+            letters.forEach((l, i) => { l.style.animationDelay = (i * 0.1) + 's'; });
 
-                // 4. Add glowing effect after all letters arrive (approx 2s)
-                setTimeout(() => {
-                    document.getElementById('love-text').classList.add('glow-effect');
-                }, letters.length * 150 + 1000);
-
-                // 5. Start the heart shower
-                setInterval(createHeart, 100); // intense heart shower
-                
-            }, 500); // delay after button click
+            setInterval(createHeart, 200);
         }
 
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
-            
-            const icons = ['❤️', '💖', '✨', '🌸', '💘'];
-            heart.innerHTML = icons[Math.floor(Math.random() * icons.length)];
-            
+            heart.innerHTML = ['❤️','💖','🌸','✨'][Math.floor(Math.random()*4)];
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.bottom = '-10vh'; // starts from below screen
-            heart.style.fontSize = (Math.random() * 20 + 20) + 'px'; // random size
-            heart.style.animationDuration = (Math.random() * 3 + 2) + 's'; // random speed
-            
+            heart.style.bottom = '-5vh';
+            heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
             document.body.appendChild(heart);
-            
-            // remove to clean memory
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
+            setTimeout(() => heart.remove(), 4000);
         }
     </script>
 </body>
