@@ -3,74 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surprise Letter ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400&display=swap" rel="stylesheet">
+    <title>Magic Surprise ❤️</title>
     <style>
         body {
-            display: flex; justify-content: center; align-items: center;
-            height: 100vh; background-color: #fae1dd;
-            margin: 0; font-family: 'Poppins', sans-serif; overflow: hidden;
+            margin: 0; height: 100vh; display: flex;
+            justify-content: center; align-items: center;
+            background: #000; overflow: hidden;
+            font-family: 'Arial', sans-serif;
         }
 
-        .envelope-wrapper { background-color: #f7abb1; width: 280px; height: 180px; position: relative; cursor: pointer; border-radius: 0 0 10px 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        
-        /* Lifafa ka upar wala dhakkan */
-        .envelope-wrapper::before {
-            content: ""; position: absolute; top: 0; z-index: 2;
-            border-top: 100px solid #ff8fa3; border-left: 140px solid transparent; border-right: 140px solid transparent;
-            transform-origin: top; transition: transform 0.5s ease;
+        /* Clicking Area */
+        #container { position: relative; cursor: pointer; text-align: center; }
+
+        /* The Big Floating Heart */
+        .main-heart {
+            font-size: 100px; color: #ff4d6d;
+            animation: float 3s ease-in-out infinite, glow 1.5s ease-in-out infinite alternate;
+            transition: transform 0.5s;
         }
 
-        /* Khulne wala animation */
-        .open::before { transform: rotateX(180deg); z-index: 0; }
-
-        .letter {
-            position: absolute; bottom: 0; left: 10px; right: 10px; height: 90%;
-            background-color: white; border-radius: 5px; padding: 15px;
-            transition: transform 0.5s ease; z-index: 1; text-align: center;
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.1); }
         }
 
-        .open .letter { transform: translateY(-100px); height: 220px; box-shadow: 0 -10px 20px rgba(0,0,0,0.05); }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff4d6d; }
+            to { text-shadow: 0 0 30px #ff758f, 0 0 50px #ff758f; }
+        }
 
-        .text { font-family: 'Dancing Script', cursive; font-size: 1.3rem; color: #ff4d6d; opacity: 0; }
-        .open .text { opacity: 1; transition: opacity 1s 0.5s; }
+        /* Hidden Message */
+        #message {
+            display: none; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); width: 300px;
+            color: #fff; z-index: 10;
+        }
 
-        .heart-icon { position: absolute; top: 40px; left: 50%; transform: translateX(-50%); font-size: 30px; z-index: 3; color: white; transition: 0.3s; }
-        .open .heart-icon { opacity: 0; }
+        h2 { font-size: 2.5rem; color: #ff4d6d; margin: 0; text-shadow: 0 0 10px #fff; }
+        p { font-size: 1.2rem; color: #ffccd5; }
 
-        /* Floating Bubbles */
-        .bubble { position: absolute; bottom: -20px; background: rgba(255, 143, 163, 0.3); border-radius: 50%; animation: rise 4s infinite; }
-        @keyframes rise { to { transform: translateY(-110vh); opacity: 0; } }
+        /* Particle Hearts after Blast */
+        .particle {
+            position: absolute; pointer-events: none;
+            font-size: 20px; animation: move var(--d) ease-out forwards;
+        }
+
+        @keyframes move {
+            to { transform: translate(var(--x), var(--y)); opacity: 0; }
+        }
+
+        .hint { color: #555; position: absolute; bottom: -60px; width: 100%; left: 0; }
     </style>
 </head>
 <body>
 
-    <div class="envelope-wrapper" id="envelope" onclick="openLetter()">
-        <div class="heart-icon">❤️</div>
-        <div class="letter">
-            <div class="text">
-                Meri Pyari Aditee... <br><br>
-                Aap meri muskurahat ki wajah ho. Hamesha aise hi saath rehna! ✨
-            </div>
+    <div id="container" onclick="blast(this)">
+        <div class="main-heart" id="heart">❤️</div>
+        <div class="hint">Tap to Open</div>
+        
+        <div id="message">
+            <h2>I Love You</h2>
+            <p>Aap meri life ki sabse Pahli Ladki Ho!</p>
         </div>
     </div>
 
     <script>
-        function openLetter() {
-            document.getElementById('envelope').classList.toggle('open');
-            createBubbles();
-        }
+        function blast(el) {
+            const heart = document.getElementById('heart');
+            const msg = document.getElementById('message');
+            
+            // Hide main heart
+            heart.style.display = 'none';
+            document.querySelector('.hint').style.display = 'none';
+            
+            // Show message with zoom effect
+            msg.style.display = 'block';
+            msg.style.animation = 'zoomIn 1s forwards';
 
-        function createBubbles() {
-            for(let i=0; i<15; i++) {
-                let b = document.createElement('div');
-                b.className = 'bubble';
-                let size = Math.random() * 20 + 10 + 'px';
-                b.style.width = size; b.style.height = size;
-                b.style.left = Math.random() * 100 + 'vw';
-                b.style.animationDelay = Math.random() * 2 + 's';
-                document.body.appendChild(b);
-                setTimeout(() => b.remove(), 4000);
+            // Create 50 small flying hearts
+            for (let i = 0; i < 50; i++) {
+                const p = document.createElement('div');
+                p.classList.add('particle');
+                p.innerHTML = ['❤️', '💖', '✨'][Math.floor(Math.random() * 3)];
+                
+                // Random directions
+                const x = (Math.random() - 0.5) * 400 + 'px';
+                const y = (Math.random() - 0.5) * 400 + 'px';
+                const d = (Math.random() * 2 + 1) + 's';
+                
+                p.style.setProperty('--x', x);
+                p.style.setProperty('--y', y);
+                p.style.setProperty('--d', d);
+                p.style.left = '50%';
+                p.style.top = '50%';
+                
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 2000);
             }
         }
     </script>
